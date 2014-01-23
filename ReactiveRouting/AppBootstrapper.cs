@@ -7,9 +7,16 @@ namespace ReactiveRouting
         public void Run()
         {
             RegisterViews();
-            var vm = new MainWindowViewModel();
+            var vm = MakeAndRegisterMainViewModel();
             var view = new MainWindowView {ViewModel = vm};
             view.Show();
+        }
+
+        private MainWindowViewModel MakeAndRegisterMainViewModel()
+        {
+            var vm = new MainWindowViewModel();
+            RxApp.MutableResolver.RegisterConstant(vm, typeof(IScreen));
+            return vm;
         }
 
         private void RegisterViews()
